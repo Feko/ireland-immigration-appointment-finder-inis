@@ -18,6 +18,8 @@ This script requires **Python 3.7+**. If you don't have it yet, just head to [Py
 
 Next, we need to install the dependencies. About the dependencies, this script use only one: **requests**. I'm not creating a `requirements.txt` file for just one dependency, so just type `$ pip install requests` in your terminal, and you are done. If you don't know how to install pip packages, please refer to [this guide.](https://datatofish.com/install-package-python-using-pip/)
 
+As of **July/2021**, you will also need [PhantomJS](https://phantomjs.org/download.html). As **@WolfofGovt** noted in [Issue #1](https://github.com/Feko/ireland-immigration-appointment-finder-inis/issues/1), the government has added a [**Big-IP F5 Web Scrapping Protection**](https://support.f5.com/csp/article/K15405450) redirection layer in front of the website. While the idea of having a Government IT section concerned with the issues and working toward solving the problem is an amazing thing, this approach is ineffective. There are many ways to overcome this protection, such as automating a browser with Selenium, or using tools such as [Scrapping Hub's Splash](https://github.com/scrapinghub/splash/issues/690). I choose to use PhantomJS, which you need to install and [set your computer **PATH** environment variable](https://www.java.com/en/download/help/path.html) to reach your downloaded PhantomJS. 
+
 Having this sorted out, grab the code! Clone this repository, or download the code as a zip using the green **Code** button above, and you are ready to go.
 
 ## Usage
