@@ -1,5 +1,5 @@
 import requests, urllib3, sys, webbrowser
-from contants import TermColors, Regex, RunParams, log
+from constants import TermColors, Regex, RunParams, log
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 

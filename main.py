@@ -1,5 +1,5 @@
 import json, time, urllib3
-from contants import TermColors, RunParams, log
+from constants import TermColors, RunParams, log
 from inis import InisClient, InisResponseParser
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
