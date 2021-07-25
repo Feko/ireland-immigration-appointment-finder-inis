@@ -1,42 +1,17 @@
 import requests, urllib3, sys, webbrowser
-from constants import TermColors, Regex, RunParams, log
+from tokens import PhantomJSTokenExtractor
+from constants import TermColors, RunParams, log, InisConstants
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
-
-class InisConstants:
-  FORM_URL = 'https://burghquayregistrationoffice.inis.gov.ie/Website/AMSREG/AMSRegWeb.nsf/AppSelect?OpenForm'
-  WEBSERVICE_URL = 'https://burghquayregistrationoffice.inis.gov.ie/Website/AMSREG/AMSRegWeb.nsf/(getAppsNear)?readform&cat=All&sbcat=All&typ=New&k={k}&p={p}'
-  HEADERS = {
-    'Accept': 'application/json, text/javascript, */*; q=0.01',
-    'Accept-Encoding': 'gzip, deflate, br',
-    'Accept-Language': 'en-US,en;q=0.9',
-    'Connection': 'keep-alive',
-    'Cookie': 'CookieScriptConsent={"action":"accept","categories":"[\\"performance\\",\\"targeting\\"]"}; _ga=GA1.3.1805604899.1609865661; _ga=GA1.4.1805604899.1609865661; _gid=GA1.4.1398526851.1620633251; _gat=1',
-    'Host': 'burghquayregistrationoffice.inis.gov.ie',
-    'Referer': 'https://burghquayregistrationoffice.inis.gov.ie/Website/AMSREG/AMSRegWeb.nsf/AppSelect?OpenForm',
-    'sec-ch-ua': '" Not A;Brand";v="99", "Chromium";v="90", "Google Chrome";v="90"',
-    'sec-ch-ua-mobile': '?0',
-    'Sec-Fetch-Dest': 'empty',
-    'Sec-Fetch-Mode': 'cors',
-    'Sec-Fetch-Site': 'same-origin',
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36',
-    'X-Requested-With': 'XMLHttpRequest'
-  }
-  EMPTY_PATTERN='empty'
-  APPOINTMENTS_FOUND_PATTERN='slots'
-  ERROR_PATTERN='There was a problem finding'
 
 
 class InisClient:
   def __init__(self):
     self.k_token = None
     self.p_token = None
+    self.token_provider = PhantomJSTokenExtractor()
   
   def _refresh_tokens(self):
-    site_html = requests.request("GET", InisConstants.FORM_URL, verify=False).text
-    k = Regex.K_TOKEN.search(site_html).groups()[0]
-    p = Regex.P_TOKEN.search(site_html).groups()[0]
-    self.k_token, self.p_token = k, p
+    self.k_token, self.p_token = self.token_provider.get_tokens(InisConstants.FORM_URL)
 
   def get_nearest_appointments(self):
     self._refresh_tokens()
